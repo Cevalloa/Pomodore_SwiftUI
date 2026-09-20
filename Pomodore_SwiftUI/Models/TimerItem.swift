@@ -7,8 +7,5 @@
 import Foundation
 
 struct TimerItem: Identifiable {
-    let id: Int
-    
-    var accumulatedTime: TimeInterval = 0
-    var runningSince: Date?
+    let id = UUID()
 }
