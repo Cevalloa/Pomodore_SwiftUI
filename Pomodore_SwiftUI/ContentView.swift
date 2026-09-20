@@ -8,19 +8,16 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @State private var items = (1...50).map {
+        TimerItem(id: $0)
+    }
 
     var body: some View {
-        List(1...50, id: \.self) { index in
-            let startTime = Date.now
-
-            Text(
-                TimeDataSource<Date>.currentDate,
-                format: .stopwatch(
-                    startingAt: startTime,
-                    showsHours: true,
-                    maxPrecision: .seconds(1)
-                )
-            )
+        NavigationStack {
+            List($items) { $item in
+                TimerRow(item: $item)
+            }
         }
     }
 }
