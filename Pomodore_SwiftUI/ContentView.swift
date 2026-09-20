@@ -8,14 +8,20 @@
 import SwiftUI
 
 struct ContentView: View {
+
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        List(1...50, id: \.self) { index in
+            let startTime = Date.now
+
+            Text(
+                TimeDataSource<Date>.currentDate,
+                format: .stopwatch(
+                    startingAt: startTime,
+                    showsHours: true,
+                    maxPrecision: .seconds(1)
+                )
+            )
         }
-        .padding()
     }
 }
 
