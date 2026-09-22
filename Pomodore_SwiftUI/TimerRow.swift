@@ -8,7 +8,48 @@
 import SwiftUI
 
 struct TimerRow: View {
+
+    @Binding var timerItem: TimerItem
+
     var body: some View {
+
+        VStack {
+            if let timeSince = timerItem.timeSince {
+
+                let startTime = timeSince.addingTimeInterval(-timerItem.totalTime)
+
+                Text(
+                    .currentDate,
+                    format: .stopwatch(
+                        startingAt: startTime,
+                        showsHours: true,
+                        maxFieldCount: 2,
+                        maxPrecision: .seconds(1)
+                    )
+                )
+            } else {
+                Text(timerItem.totalTime, format: .number.precision(.fractionLength(1)))
+            }
+        }.onAppear {
+            start()
+        }.onDisappear {
+            pause()
+        }
+    }
+    
+    func start() {
+        guard timerItem.timeSince == nil else {
+            return
+        }
         
+        timerItem.timeSince = .now
+    }
+    
+    func pause() {
+        guard let timeSince = timerItem.timeSince else {
+            return
+        }
+        timerItem.totalTime += Date.now.timeIntervalSince(timeSince)
+        timerItem.timeSince = nil
     }
 }

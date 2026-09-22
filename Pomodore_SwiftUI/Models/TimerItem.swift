@@ -8,4 +8,7 @@ import Foundation
 
 struct TimerItem: Identifiable {
     let id = UUID()
+    
+    var totalTime: TimeInterval = 0
+    var timeSince: Date?
 }
