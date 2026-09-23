@@ -24,17 +24,36 @@ struct TimerRow: View {
                         startingAt: startTime,
                         showsHours: true,
                         maxFieldCount: 2,
-                        maxPrecision: .seconds(1)
+                        maxPrecision: .milliseconds(100)
                     )
                 )
             } else {
-                Text(timerItem.totalTime, format: .number.precision(.fractionLength(1)))
+                let minutes = Int(timerItem.totalTime) / 60
+                let seconds = Int(timerItem.totalTime) % 60
+                
+                Text(String(format:"%02d:%02d", minutes, seconds))
+//                Text(timerItem.totalTime, format: .number.precision(.fractionLength(1)))
             }
         }.onAppear {
-            start()
+            if !timerItem.isUserPaused {
+                start()
+            }
         }.onDisappear {
             pause()
+        }.onTapGesture {
+            togglePause()
         }
+    }
+
+    func togglePause() {
+        
+        if timerItem.isUserPaused {
+            start()
+        } else {
+            pause()
+        }
+        
+        timerItem.isUserPaused = !timerItem.isUserPaused
     }
     
     func start() {

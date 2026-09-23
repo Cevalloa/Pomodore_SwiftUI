@@ -11,4 +11,6 @@ struct TimerItem: Identifiable {
     
     var totalTime: TimeInterval = 0
     var timeSince: Date?
+    var isUserPaused = false
+
 }
