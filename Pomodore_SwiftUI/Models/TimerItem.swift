@@ -6,11 +6,6 @@
 //
 import Foundation
 
-struct TimerItem: Identifiable {
-    let id = UUID()
+struct TimerItem{
     
-    var totalTime: TimeInterval = 0
-    var timeSince: Date?
-    var isUserPaused = false
-
 }
