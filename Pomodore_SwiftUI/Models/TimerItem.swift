@@ -6,6 +6,9 @@
 //
 import Foundation
 
-struct TimerItem{
+struct TimerItem: Identifiable {
+    let id = UUID()
     
+    var elapsedTime: TimeInterval = 0
+    var startedAt: Date?
 }

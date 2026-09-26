@@ -8,7 +8,14 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State var items = (1...50).map { index in
+        TimerItem()
+    }
+
     var body: some View {
+        List($items) { item in
+            TimerRow(item: item)
+        }
     }
 }
 
