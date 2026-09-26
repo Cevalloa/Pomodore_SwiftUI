@@ -8,6 +8,7 @@ import Foundation
 
 struct TimerItem: Identifiable {
     let id = UUID()
+    var isPaused = false
     
     var elapsedTime: TimeInterval = 0
     var startedAt: Date?

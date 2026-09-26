@@ -13,9 +13,11 @@ struct TimerRow: View {
 
     var body: some View {
 
-        VStack {
+        HStack {
             if let startedAt = item.startedAt {
-                let timeToStart = startedAt.addingTimeInterval(-item.elapsedTime)
+                let timeToStart = startedAt.addingTimeInterval(
+                    -item.elapsedTime
+                )
 
                 Text(
                     .currentDate,
@@ -28,6 +30,12 @@ struct TimerRow: View {
                         )
                 )
 
+                Circle().frame(width: 12, height: 12).phaseAnimator([false, true ]) { circle, phase in
+                    circle.opacity(phase ? 0.2 : 1.0)
+                } animation: { _ in
+                    .easeInOut(duration: 0.5)
+                }
+
             } else {
                 let minutes = Int(item.elapsedTime) / 60
                 let seconds = Int(item.elapsedTime) % 60
@@ -35,10 +43,24 @@ struct TimerRow: View {
                 Text(String(format: "%02d:%02d", minutes, seconds))
             }
         }.onAppear {
-            start()
+            if !item.isPaused {
+                start()
+            }
         }.onDisappear {
             pause()
+        }.onTapGesture {
+            togglePause()
         }
+    }
+
+    func togglePause() {
+        if item.isPaused {
+            start()
+        } else {
+            pause()
+        }
+
+        item.isPaused.toggle()
     }
 
     func start() {
